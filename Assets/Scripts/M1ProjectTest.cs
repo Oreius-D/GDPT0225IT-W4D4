@@ -89,18 +89,18 @@ Hero A (Knight):
 HP: 120
 Res: EARTH
 Weak: FIRE
-Stats: atk20 / def15 / res8 / spd10 / crt10 / aim85 / eva10
+Stats: atk 20 / def 15 / res 8 / spd 10 / crt 10 / aim 85 / eva 10
 Weapon: Iron Greatsword
- - Bonus: atk+8 / def+3 / res+0 / spd-2 / crt+5 / aim+5 / eva+0
+ - Bonus: atk 8 / def 3 / res 0 / spd -2 / crt 5 / aim 5 / eva 0
  - Type: PHYSICAL / Element: NONE
 
 Hero B (Mage):
 HP: 90
 Res: ICE
 Weak: FIRE
-Stats: atk18 / def6 / res15 / spd12 / crt15 / aim80 / eva15
+Stats: atk 18 / def 6 / res 15 / spd 12 / crt 15 / aim 80 / eva 15
 Weapon: Volcanic Staff
- - Bonus: atk+10 / def0 / res+4 / spd+1 / crt+3 / aim+5 / eva+1
+ - Bonus: atk 10 / def 0 / res 4 / spd 1 / crt 3 / aim 5 / eva 1
  - Type: MAGICAL / Element: FIRE
 
 EXPECTATION:
@@ -117,18 +117,18 @@ Hero A — Fire Rogue
 HP: 80
 Res: DARKNESS
 Weak: ICE
-Stats: atk35 / def8 / res6 / spd18 / crt20 / aim90 / eva20
+Stats: atk 35 / def 8 / res 6 / spd 18 / crt 20 / aim 90 / eva 20
 Weapon: Flame Dagger
- - Bonus: atk+6 / def0 / res0 / spd+4 / crt+10 / aim+5 / eva+2
+ - Bonus: atk 6 / def 0 / res 0 / spd 4 / crt 10 / aim 5 / eva 2
  - Type: PHYSICAL / Element: FIRE
 
 Hero B — Ice Guardian
 HP: 150
 Res: FIRE
 Weak: LIGHTNING
-Stats: atk18 / def20 / res18 / spd8 / crt5 / aim75 / eva5
+Stats: atk 18 / def 20 / res 18 / spd 8 / crt 5 / aim 75 / eva 5
 Weapon: Frozen Shield
- - Bonus: atk+3 / def+8 / res+6 / spd-2 / crt0 / aim+2 / eva0
+ - Bonus: atk 3 / def 8 / res 6 / spd -2 / crt 0 / aim 2 / eva 0
  - Type: PHYSICAL / Element: ICE
 
 EXPECTATION:
@@ -142,29 +142,30 @@ EXPECTATION:
 === TEST CASE #3 — Barehanded Monk vs Assassin (colpire/schivare e no arma) ===
 
 Hero A — Monk (no weapon)
-HP: 110
+HP: 140
 Res: NONE
 Weak: NONE
-Stats: atk15 / def12 / res10 / spd14 / crt5 / aim70 / eva15
+Stats: atk 50 / def 30 / res 25 / spd 14 / crt 5 / aim 80 / eva 50
 Weapon: NONE
 
 Hero B — Assassin
 HP: 70
 Res: WIND
 Weak: LIGHT
-Stats: atk20 / def6 / res6 / spd16 / crt25 / aim85 / eva30
+Stats: atk 20 / def 6 / res 6 / spd 16 / crt 25 / aim 85 / eva 30
 Weapon: Twin Daggers
-  Bonus: atk+4 / def0 / res0 / spd+3 / crt+10 / aim+3 / eva+5
+  Bonus: atk 35 / def 0 / res 0 / spd 3 / crt 50 / aim 50 / eva 5
   Type: PHYSICAL / Element: NONE
 
 EXPECTATION:
-- Assassin va primo (SPD troppo alta)
-- Molti MISS data EVA30 di Assassin
-- Monk basso crit e basso danno, deve colpire molte volte 
+- Assassin va primo
+- Molti MISS data EVA 70 di Assassin
+- Monk basso crit, deve colpire molte volte 
 - Assassin fragile, ma se fa crit esplode Monk
 - Test per:
   - Logica senza weapon
   - Schivate
-  - Scontri basati sulle differenze di crit rate
+  - Scontri basati sulle differenze di crit rat
+  - No debolezze elementari
 #####################################################################################
 */

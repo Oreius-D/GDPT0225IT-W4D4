@@ -6,7 +6,7 @@ using UnityEngine.Diagnostics;
 //Classe statica contenente le funzioni che regolano il gioco
 public class GameFormulas
 {
-    public static bool ValidateCombatants(Hero a, Hero b)
+    public static bool ValidateCombatants(Hero a, Hero b) //Funzione extra per validazione combattenti inseriti
     {
         //Controllo che i combattenti siano impostati nell'Inspector
         if (a == null || b == null)
@@ -93,7 +93,7 @@ public class GameFormulas
         int chance = Mathf.Clamp(critValue, UtilsConstants.FLOOR, UtilsConstants.ROLL_CEILING);
 
         //Lancio numero randomico tra 0 e 99
-        int roll = UnityEngine.Random.Range(UtilsConstants.FLOOR, UtilsConstants.ROLL_CEILING);
+        int roll = Random.Range(UtilsConstants.FLOOR, UtilsConstants.ROLL_CEILING);
 
         //Logica per critico, seguiamo una logica roll under, quindi valore pari o inferiore a critValue per colpire
         bool crit = roll < chance;
@@ -109,6 +109,11 @@ public class GameFormulas
 
     public static int CalculateDamage(Hero attacker, Stats attackerFullStats, Hero defender, Stats defenderFullStats)
     {
+
+        //NOTA: La parte di questo metodo che dovrebbe calcolare le statistiche totali è stata messa all'interno della sua funzione 'CalculateFullStats'
+        //a fine di compiere il calcolo soltanto una volta e non tutte le volte, evitando la ripetizione inutile di calcoli dato che le statistiche sono fisse per la durata dello scontro
+
+
         //Faccio caching della weapon, così non ci accedo sempre
         var weapon = attacker.GetWeapon();
 
@@ -119,10 +124,11 @@ public class GameFormulas
         float baseDamage = Mathf.Max(UtilsConstants.FLOAT_FLOOR, attackerFullStats.atk - difesaBersaglio);
 
         //Faccio caching dell'elemento dell'arma se l'arma è presente. Di default settato a NONE
-        var elementToEval = weapon?.GetElement() ?? ELEMENT.NONE;
+        var elementToEval = weapon?.GetElem() ?? ELEMENT.NONE;
 
         //Moltiplichiamo il danno base basandoci sulle resistenze elementari
-        baseDamage *= EvaluateElementalModifier(elementToEval, defender);
+        if(elementToEval != ELEMENT.NONE)
+            baseDamage *= EvaluateElementalModifier(elementToEval, defender);
 
         //Moltiplicatore del critico
         if (IsCrit(attackerFullStats.crt))
@@ -132,7 +138,7 @@ public class GameFormulas
         return Mathf.RoundToInt(Mathf.Max(UtilsConstants.FLOAT_FLOOR, baseDamage));
     }
 
-    //Funzione che gestisce il singolo turno di uno dei combattenti
+    //Funzione extra che gestisce il singolo turno di uno dei combattenti
     public static bool TakeTurn(Hero attacker, Stats attackerFullStats, Hero defender, Stats defenderFullStats, bool nextTurn)
     {
         //Stampo nome attaccante e difensore
@@ -143,15 +149,18 @@ public class GameFormulas
         if (HasHit(attackerFullStats, defenderFullStats))
         {
             //Faccio caching dell'elemento dell'arma se l'arma è presente. Di default settato a NONE
-            var element = attacker.GetWeapon()?.GetElement() ?? ELEMENT.NONE;
+            var element = attacker.GetWeapon()?.GetElem() ?? ELEMENT.NONE;
 
-            //Stampo un messaggio se l'attacco sfrutta una debolezza elementale
-            if (HasElementAdvantage(element, defender) && !(HasElementDisadvantage(element, defender)))
-                ColoredLogs.Weakness();
+            //Stampo un messaggio se l'attacco sfrutta una debolezza elementale, evito il controllo se gli elementi non sono coinvolti
+            if (element != ELEMENT.NONE)
+            {
+                if (HasElementAdvantage(element, defender) && !(HasElementDisadvantage(element, defender)))
+                    ColoredLogs.Weakness();
 
-            //Stampo un messaggio se l'attacco è indebolito da una resistenza elementale
-            if (HasElementDisadvantage(element, defender) && !(HasElementAdvantage(element, defender)))
-                ColoredLogs.Resist();
+                //Stampo un messaggio se l'attacco è indebolito da una resistenza elementale
+                if (HasElementDisadvantage(element, defender) && !(HasElementAdvantage(element, defender)))
+                    ColoredLogs.Resist();
+            }
 
             //Calcolo il danno inflitto
             int danno = CalculateDamage(attacker, attackerFullStats, defender, defenderFullStats);
