@@ -52,11 +52,9 @@ public class M1ProjectTest : MonoBehaviour
         //Metodo per impostare primo e secondo attaccante
         void SetInitiative(Hero first, Stats firstStats, Hero second, Stats secondStats)
         {
-            //Primo ad agire
             firstAttacker = first;
             firstAttackerStats = firstStats;
 
-            //Secondo ad agire
             secondAttacker = second;
             secondAttackerStats = secondStats;
         }
@@ -67,12 +65,10 @@ public class M1ProjectTest : MonoBehaviour
     {
         //fino a quando nextTurn non diventa false, indicando quindi la sconfitta di uno dei due combattenti, alterna il turno tra il primo e il secondo
         if (nextTurn)
-            //A turno, l'eroe più veloce va per primo
             nextTurn = GameFormulas.TakeTurn(firstAttacker, firstAttackerStats, secondAttacker, secondAttackerStats, nextTurn);
 
         //Si controlla alla fine di ogni turno per far sì che il gioco si fermi appena qualcuno va a 0 hp
         if (nextTurn)
-            //A turno, l'eroe più lento va per secondo
             nextTurn = GameFormulas.TakeTurn(secondAttacker, secondAttackerStats, firstAttacker, firstAttackerStats, nextTurn);
 
     }

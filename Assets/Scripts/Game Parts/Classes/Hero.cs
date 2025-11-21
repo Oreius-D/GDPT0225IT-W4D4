@@ -50,7 +50,7 @@ public class Hero
     public Weapon GetWeapon() => weapon;
 
 
-    //Metodo per curare l'erore. Aggiunge o sottrae hp. Se diventano negativi li setta a 0
+    //Metodo per modificare gli hp dell'eroe. Aggiunge o sottrae hp. Se diventano negativi li setta a 0
     public void AddHp(int amount) => SetHp(Mathf.Max(UtilsConstants.FLOOR, GetHp() + amount));
 
     //Metodo per ferire l'erore. 

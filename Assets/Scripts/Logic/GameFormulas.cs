@@ -6,7 +6,7 @@ using UnityEngine.Diagnostics;
 //Classe statica contenente le funzioni che regolano il gioco
 public class GameFormulas
 {
-    public static bool ValidateCombatants(Hero a, Hero b) //Funzione extra per validazione combattenti inseriti
+    public static bool ValidateCombatants(Hero a, Hero b)
     {
         //Controllo che i combattenti siano impostati nell'Inspector
         if (a == null || b == null)
@@ -79,7 +79,6 @@ public class GameFormulas
 
         //Controllo se ho mancato
         if (!hit)
-            //Messaggio in caso di mancato
             ColoredLogs.Miss();
 
         return hit;
@@ -95,18 +94,17 @@ public class GameFormulas
         //Lancio numero randomico tra 0 e 99
         int roll = Random.Range(UtilsConstants.FLOOR, UtilsConstants.ROLL_CEILING);
 
-        //Logica per critico, seguiamo una logica roll under, quindi valore pari o inferiore a critValue per colpire
+        //Logica per critico, seguiamo una logica roll under, quindi valore inferiore a critValue per colpire
         bool crit = roll < chance;
 
-        //Si genera un numero tra 0 e 99 e si confronta con critValue, se minore allora è un critico
+        //Controllo se ho un colpo critico
         if (crit)
-            //Segnialiamo che ha colpito e stampiamo il messaggio in console
             ColoredLogs.Crit();
 
         return crit;
     }
 
-
+    //Funzione che gestisce il calcolo del danno
     public static int CalculateDamage(Hero attacker, Stats attackerFullStats, Hero defender, Stats defenderFullStats)
     {
 
@@ -145,19 +143,18 @@ public class GameFormulas
         ColoredLogs.Attacca(attacker.GetName());
         ColoredLogs.Difende(defender.GetName());
 
-        //Controllo se l'attaccante ha colpito
+        //Blocco il turno se l'attacco non va a segno
         if (HasHit(attackerFullStats, defenderFullStats))
         {
             //Faccio caching dell'elemento dell'arma se l'arma è presente. Di default settato a NONE
             var element = attacker.GetWeapon()?.GetElem() ?? ELEMENT.NONE;
 
-            //Stampo un messaggio se l'attacco sfrutta una debolezza elementale, evito il controllo se gli elementi non sono coinvolti
+            //Stampo un messaggio se l'attacco sfrutta una debolezza elementale o è indebolito da una resistenza elementale, evito il controllo se gli elementi non sono coinvolti
             if (element != ELEMENT.NONE)
             {
                 if (HasElementAdvantage(element, defender) && !(HasElementDisadvantage(element, defender)))
                     ColoredLogs.Weakness();
 
-                //Stampo un messaggio se l'attacco è indebolito da una resistenza elementale
                 if (HasElementDisadvantage(element, defender) && !(HasElementAdvantage(element, defender)))
                     ColoredLogs.Resist();
             }
