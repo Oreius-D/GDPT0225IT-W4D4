@@ -50,11 +50,11 @@ public class Hero
     public Weapon GetWeapon() => weapon;
 
 
-    //Metodo per curare l'erore. Aggiunge hp
-    public void AddHp(int amount) => SetHp(GetHp() + amount);
+    //Metodo per curare l'erore. Aggiunge o sottrae hp. Se diventano negativi li setta a 0
+    public void AddHp(int amount) => SetHp(Mathf.Max(UtilsConstants.FLOOR, GetHp() + amount));
 
-    //Metodo per ferire l'erore. Sottrae hp. Se diventano negativi li setta a 0
-    public void TakeDamage(int damage) => AddHp(-Mathf.Max(UtilsConstants.FLOOR, damage));
+    //Metodo per ferire l'erore. 
+    public void TakeDamage(int damage) => AddHp(-damage);
 
     //Metodo per controllare se l'eroe è vivo. Ritorna false se hp diventano 0
     public bool IsAlive() => GetHp() > UtilsConstants.FLOOR;
